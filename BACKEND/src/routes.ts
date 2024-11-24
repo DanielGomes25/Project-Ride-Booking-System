@@ -1,8 +1,5 @@
-import { FastifyInstance, FastifyPluginOptions, FastifyRequest, FastifyReply } from "fastify";
+import { FastifyInstance, FastifyPluginOptions, FastifyRequest, FastifyReply } from 'fastify';
 
-
-export async function routes(fastify: FastifyInstance, options: FastifyPluginOptions) {
-    fastify.get("/ride/estimate", async (request: FastifyRequest, reply: FastifyReply) => {
-    return { hello: "world" };
-  });
+export async function routes(fastify: FastifyInstance, _options: FastifyPluginOptions) {
+  fastify.get('/ride/estimate', async (_request: FastifyRequest, _reply: FastifyReply) => ({ hello: 'world' }));
 }
