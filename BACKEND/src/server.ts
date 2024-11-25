@@ -16,6 +16,8 @@ const start = async () => {
     process.exit(1);
   }
 
+  console.log('Server listening');
+
 };
 
 start();  
