@@ -21,6 +21,8 @@ model Customer {
 
   // Relacionamento com Ride
   rides Ride[]
+
+  @@map("customers")
 }
 
 model Ride {
@@ -36,6 +38,8 @@ model Ride {
   // Relacionamentos
   customer     Customer @relation(fields: [customer_id], references: [id])
   driver       Driver   @relation(fields: [driver_id], references: [id])
+
+  @@map("rides")
 }
 
 model Driver {
@@ -50,4 +54,6 @@ model Driver {
 
   // Relacionamento com Ride
   rides Ride[]
+
+  @@map("drivers")
 }
