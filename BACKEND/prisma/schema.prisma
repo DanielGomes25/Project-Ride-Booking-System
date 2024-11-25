@@ -13,19 +13,41 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Ride {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  customer_id  String
-  origin       String
-  destination  String
-  distance     Float
-  duration     String
-  driver_id    Int
-  driver_name  String
-  value        Float
-  createdAt    DateTime @default(now())
 
-  @@map("rides")
+model Customer {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  email String  @unique
+
+  // Relacionamento com Ride
+  rides Ride[]
 }
 
+model Ride {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  origin       String
+  destination  String
+  customer_id  String  @db.ObjectId
+  driver_id    String  @db.ObjectId
+  distance     Float
+  duration     Int
+  price        Float
 
+  // Relacionamentos
+  customer     Customer @relation(fields: [customer_id], references: [id])
+  driver       Driver   @relation(fields: [driver_id], references: [id])
+}
+
+model Driver {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  description  String
+  vehicle      String
+  rating       Float
+  rate_per_km  Float
+  min_distance Float
+  comment      String?
+
+  // Relacionamento com Ride
+  rides Ride[]
+}
