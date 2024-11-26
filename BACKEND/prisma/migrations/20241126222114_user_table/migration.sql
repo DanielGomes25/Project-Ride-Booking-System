@@ -15,7 +15,7 @@ CREATE TABLE "rides" (
     "customer_id" TEXT NOT NULL,
     "driver_id" INTEGER NOT NULL,
     "distance" DOUBLE PRECISION NOT NULL,
-    "duration" INTEGER NOT NULL,
+    "duration" TEXT NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "rides_pkey" PRIMARY KEY ("id")
