@@ -1,49 +1,38 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-
 model Customer {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  id    String @id @default(cuid())
   name  String
-  email String  @unique
-
-  // Relacionamento com Ride
+  email String @unique
   rides Ride[]
 
   @@map("customers")
 }
 
 model Ride {
-  id           String  @id @default(auto()) @map("_id") @db.ObjectId
-  origin       String
-  destination  String
-  customer_id  String  @db.ObjectId
-  driver_id    String  @db.ObjectId
-  distance     Float
-  duration     Int
-  price        Float
-
-  // Relacionamentos
-  customer     Customer @relation(fields: [customer_id], references: [id])
-  driver       Driver   @relation(fields: [driver_id], references: [id])
+  id          Int      @id @default(autoincrement())
+  origin      String
+  destination String
+  customer_id String
+  driver_id   Int
+  distance    Float
+  duration    Int
+  price       Float
+  customer    Customer @relation(fields: [customer_id], references: [id])
+  driver      Driver   @relation(fields: [driver_id], references: [id])
 
   @@map("rides")
 }
 
 model Driver {
-  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  id           Int     @id @default(autoincrement())
   name         String
   description  String
   vehicle      String
@@ -51,9 +40,7 @@ model Driver {
   rate_per_km  Float
   min_distance Float
   comment      String?
-
-  // Relacionamento com Ride
-  rides Ride[]
+  rides        Ride[]
 
   @@map("drivers")
 }

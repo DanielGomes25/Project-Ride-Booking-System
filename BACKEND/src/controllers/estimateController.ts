@@ -1,13 +1,40 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { EstimateRideService } from "../services/estimateRide";
+import { EstimateRequestBody } from "../interfaces/rideInterface";
+import { validateEstimateRequest } from "../middlewares/validation";
+import { calculateRoute , getAvailableDrivers } from "../services/driverService";
+import { fetchGoogleRoute } from "../services/mapsService";
 
 
-const estimateController = async (request: FastifyRequest, reply: FastifyReply) => {
-  
-  { origin, destination } = request.body as { origin: string, destination: string };
+class EstimateController {
+  async handle(request: FastifyRequest, reply: FastifyReply) {
+    const { customer_id ,origin, destination } = request.body as EstimateRequestBody;
+
+    const validationError = validateEstimateRequest(customer_id, origin, destination);
+
+    if (validationError) {
+      return reply.code(400).send(validationError);
+    }
     
-   const estimateRideService = new EstimateRideService();
-   const ride = await estimateRideService.execute({ origin, destination });
+    // Calcular rota usando o Google Maps API
+    const route = await fetchGoogleRoute(origin, destination);
+    const routeData = await calculateRoute(origin, destination);
+    const driveResult = parseFloat(routeData.distance.replace(' km',''));
+    // Calcular motoristas disponíveis
+    const drivers = await getAvailableDrivers(driveResult);
     
-  reply.send(ride);
-};
+    
+    return {
+      origin: routeData.start_location,
+      destination: routeData.end_location,
+      distance: driveResult,
+      duration: routeData.duration,
+      options: drivers,
+      routeResponse: route.routeResponse,
+    };
+    
+
+  }
+}
+
+
+export { EstimateController };
