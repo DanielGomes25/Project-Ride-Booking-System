@@ -1,8 +1,8 @@
 -- CreateTable
 CREATE TABLE "customers" (
     "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
+    "name" TEXT,
+    "email" TEXT,
 
     CONSTRAINT "customers_pkey" PRIMARY KEY ("id")
 );
@@ -16,7 +16,8 @@ CREATE TABLE "rides" (
     "driver_id" INTEGER NOT NULL,
     "distance" DOUBLE PRECISION NOT NULL,
     "duration" TEXT NOT NULL,
-    "price" DOUBLE PRECISION NOT NULL,
+    "value" DOUBLE PRECISION NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "rides_pkey" PRIMARY KEY ("id")
 );

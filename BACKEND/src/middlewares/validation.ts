@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 
-
 const prisma = new PrismaClient();
 
 export function validateEstimateRequest(customer_id: string, origin: string, destination: string) {
@@ -65,3 +64,48 @@ export async function validateRideRequest(customer_id: string, origin: string, d
   
   return null;
 }
+
+
+
+
+
+
+export async function validateAllRequest(customer_id: string, driver_id: number) {
+  if (!customer_id) {
+    return {
+      error_code: "INVALID_DATA",
+      error_description: "Customer ID are required.",
+    };
+  }
+
+  const findDriver = await prisma.driver.findUnique({
+    where: {
+      id: driver_id,
+    },
+  });
+
+
+  if (!findDriver) {
+    return {
+      error_code: "INVALID_DRIVER",
+      error_description: "Driver not found.",
+    };
+  }
+
+  const findRide = await prisma.ride.findMany({
+    where: {
+      customer_id,
+      driver_id: driver_id,
+    },
+  });
+
+  if (findRide.length === 0) 
+    return {
+      error_code: "NO_RIDES_FOUND",
+      error_description: "Rides not found.",
+    };
+
+ 
+  return null;
+}
+  

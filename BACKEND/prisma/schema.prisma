@@ -27,6 +27,7 @@ model Ride {
   value       Float
   customer    Customer @relation(fields: [customer_id], references: [id])
   driver      Driver   @relation(fields: [driver_id], references: [id])
+  date        DateTime @default(now())
 
   @@map("rides")
 }
