@@ -16,8 +16,8 @@ const { customer_id, destination_name, distance, origin_name, duration  } = loca
     
     const confirmeRide = async (driveId: number, driverName: string, value: number) => {
         try {
-          
-          const result = await api.patch('/ride/confirm', {
+        
+           await api.patch('/ride/confirm', {
             customer_id: customer_id, 
             origin: origin_name,           
             destination: destination_name, 
@@ -30,11 +30,10 @@ const { customer_id, destination_name, distance, origin_name, duration  } = loca
             value: value,             
           });
 
-          console.log(result.data);
           
-      
         
-          navigate('/history');
+          navigate('/history', { state: location.state.options});
+
           alert('Viagem confirmada com sucesso');
         } catch (error: any) {
           alert('Erro ao confirmar a viagem: ' + (error.response?.data?.message || error.message));
