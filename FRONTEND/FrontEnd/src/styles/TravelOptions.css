@@ -1,0 +1,36 @@
+.travel-options {
+    text-align: center;
+  }
+  
+  .travel-options  map {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .travel-options ul {
+    padding: 10px;
+  }
+  
+  .travel-options li {
+    background: #fff;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .travel-options button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .travel-options button:hover {
+    background-color: #218838;
+  }
+
+  

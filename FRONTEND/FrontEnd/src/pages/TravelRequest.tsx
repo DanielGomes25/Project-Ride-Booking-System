@@ -26,8 +26,15 @@ export default function TravelRequest() {
       });
 
 
-      navigate('/options', { state: response.data });
-      console.log(response.data);
+      navigate('/options', { 
+        state: {
+          ...response.data,
+          customer_id: customerId,
+          origin_name: origin,
+          destination_name: destination
+        }
+      });
+      
 
     } catch (error: unknown) {
     
