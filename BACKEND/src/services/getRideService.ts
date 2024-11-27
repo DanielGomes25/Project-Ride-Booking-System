@@ -4,22 +4,20 @@ const prisma = new PrismaClient();
 
 
 export async function getAllRides(customer_id: string, driver_id?: number) {
-  // Buscar as viagens do banco de dados
+  
   const rides = await prisma.ride.findMany({
     where: {
       customer_id,
-      ...(driver_id && { driver_id }), // Aplica filtro por motorista, se informado
+      ...(driver_id && { driver_id }), // Filtra por motorista, se `driver_id` for fornecido
     },
     include: {
-      driver: true, // Inclui os dados do motorista
+      driver: true, 
     },
     orderBy: {
-      id: 'desc', // Ordena da mais recente para a mais antiga
+      id: 'desc', 
     },
   });
 
-
-  // Consolidar todas as viagens em um único array
   const formattedRides = {
     customer_id,
     rides: rides.map((ride) => ({
@@ -37,7 +35,6 @@ export async function getAllRides(customer_id: string, driver_id?: number) {
     })),
   };
 
-  console.log('formatado', formattedRides);
 
   return formattedRides;
   
