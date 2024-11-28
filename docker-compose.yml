@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # Serviço para o Backend
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    ports:
+      - "8080:8080"  # O backend está na porta 8080
+    environment:
+      DATABASE_URL: "postgresql://postgres:mybank123@db:5432/mydatabase"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  # Serviço para o Frontend
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "80:4173"  # O frontend está na porta 80
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  # Serviço para o banco de dados
+  db:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mybank123
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  postgres-data:
+
+networks:
+  app-network:
