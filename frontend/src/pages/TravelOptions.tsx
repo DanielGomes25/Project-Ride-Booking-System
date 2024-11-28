@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useLocation, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import StaticMap from "../components/StaticMap";
 import '../styles/TravelOptions.css'
@@ -35,8 +35,8 @@ const { customer_id, destination_name, distance, origin_name, duration  } = loca
           navigate('/history', { state: location.state.options});
 
           alert('Viagem confirmada com sucesso');
-        } catch (error: any) {
-          alert('Erro ao confirmar a viagem: ' + (error.response?.data?.message || error.message));
+        } catch (error: unknown) {
+          alert('Erro ao confirmar a viagem: ' + (error as Error).message);
         }
       };
       

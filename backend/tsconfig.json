@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",                // Use o modo ESNext para as últimas funcionalidades
+    "module": "CommonJS",              // Módulo para compatibilidade
+    "outDir": "./dist",                // Diretório de saída
+    "rootDir": "./src",                // Diretório de origem
+    "strict": true,                    // Ativar o modo estrito
+    "esModuleInterop": true,           // Permitir importações compatíveis com ES Modules
+    "skipLibCheck": true,              // Ignorar checagem de bibliotecas
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*"],             // Diretórios de origem
+  "exclude": ["node_modules"]          // Excluir node_modules
+}

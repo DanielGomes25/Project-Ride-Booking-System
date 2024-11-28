@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/TravelRequest.css';
 import api from '../services/api';
@@ -39,7 +39,7 @@ export default function TravelRequest() {
     } catch (error: unknown) {
     
       if (error instanceof Error) {
-        alert('Erro ao calcular estimativa: ' + (error.response?.data?.message || error.message));
+        alert('Erro ao calcular estimativa: ' + (error.message));
       } else {
         alert('Erro desconhecido');
       }

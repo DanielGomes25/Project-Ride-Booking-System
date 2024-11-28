@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import api from "../services/api";
 import "../styles/TravelHistory.css";
 
@@ -41,7 +41,7 @@ export default function TravelHistory() {
             });
             setRides(response.data.rides);
           } catch (error: unknown) {
-            alert('Erro ao carregar o histórico de viagens: ' + (error.response?.data?.message || error.message));
+            alert('Erro ao carregar o histórico de viagens: ' + (error as Error).message);
           }
     };
 
