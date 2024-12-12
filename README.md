@@ -27,7 +27,7 @@ Proporcionar uma experiência de usuário eficiente e responsiva.
 🚀 Como Executar
 
 Clone este repositório:
-git clone https://github.com/seu-usuario/ride-booking-system.git
+git clone git@github.com:DanielGomes25/Project-Ride-Booking-System.git
 
 Navegue até a pasta do projeto:
 cd ride-booking-system
