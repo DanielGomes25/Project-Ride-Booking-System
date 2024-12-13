@@ -40,7 +40,7 @@ Inicie o servidor backend:
 npm run dev
 
 Inicie o front-end:
-npm start
+npm run dev
 
 🖥️ Demonstração
 
