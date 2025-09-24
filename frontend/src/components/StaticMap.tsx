@@ -29,3 +29,4 @@ const StaticMap: React.FC<StaticMapProps> = ({ origin, destination }) => {
 };
 
 export default StaticMap;
+
