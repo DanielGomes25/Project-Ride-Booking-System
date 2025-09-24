@@ -7,7 +7,7 @@ interface StaticMapProps {
 
 const StaticMap: React.FC<StaticMapProps> = ({ origin, destination }) => {
   const [mapUrl, setMapUrl] = useState('');
-  const apiKey = 'AIzaSyDrSpzDIHOeshYg1448-y91ikKccsN17vs'; // Substitua pela sua chave de API
+  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string;
 
   useEffect(() => {
     // Constrói a URL do mapa estático com os parâmetros corretos
