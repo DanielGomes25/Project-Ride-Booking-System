@@ -42,6 +42,7 @@ Pré‑requisitos
   - `npm run seed` (popula motoristas)
 - Rode a API:
   - `npm run dev` (http://localhost:8080)
+  - Dica: para demo sem banco, defina `USE_MOCK_DRIVERS=true` no `.env` e você pode pular migrate/seed.
 
 2) Frontend
 - Configure as variáveis do Vite:
@@ -71,6 +72,12 @@ Testando pela API (exemplos)
 - Aplique migrações e seed dentro do container do backend:
   - `docker compose exec backend npx prisma migrate deploy`
   - `docker compose exec backend npm run seed`
+
+Modo mock (sem dependências externas)
+- No `backend/.env` deixe:
+  - `USE_MOCK_ROUTES=true` (não chama Google)
+  - `USE_MOCK_DRIVERS=true` (não usa Postgres para listar motoristas)
+- Observação: confirmar corrida e histórico ainda exigem banco. Posso mockar isso também, se quiser.
 
 Observações importantes
 - Se a API do Google retornar zero resultados ou a chave estiver inválida, a API responde 502 com `ROUTE_UNAVAILABLE`.

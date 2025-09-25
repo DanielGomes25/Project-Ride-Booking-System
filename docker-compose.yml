@@ -14,6 +14,8 @@ services:
       GOOGLE_API_KEY: ${GOOGLE_API_KEY}
       # Habilita mock de rotas no backend (sem chamar Google Directions)
       USE_MOCK_ROUTES: ${USE_MOCK_ROUTES:-true}
+      # Habilita mock de motoristas (sem Postgres)
+      USE_MOCK_DRIVERS: ${USE_MOCK_DRIVERS:-true}
     depends_on:
       - db
     networks:
