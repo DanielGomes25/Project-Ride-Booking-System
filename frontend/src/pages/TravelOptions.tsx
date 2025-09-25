@@ -1,4 +1,4 @@
-import React, { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import StaticMap from "../components/StaticMap";
 import '../styles/TravelOptions.css'

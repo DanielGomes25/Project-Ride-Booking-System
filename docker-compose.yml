@@ -12,6 +12,8 @@ services:
     environment:
       DATABASE_URL: "postgresql://postgres:mybank123@db:5432/mydatabase"
       GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+      # Habilita mock de rotas no backend (sem chamar Google Directions)
+      USE_MOCK_ROUTES: ${USE_MOCK_ROUTES:-true}
     depends_on:
       - db
     networks:

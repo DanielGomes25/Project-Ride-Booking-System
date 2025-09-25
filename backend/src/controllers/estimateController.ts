@@ -15,22 +15,28 @@ class EstimateController {
       return reply.code(400).send(validationError);
     }
     
-    // Calcular rota usando o Google Maps API
-    const route = await fetchGoogleRoute(origin, destination);
-    const routeData = await calculateRoute(origin, destination);
-    const driveResult = parseFloat(routeData.distance.replace(' km',''));
-    // Calcular motoristas disponíveis
-    const drivers = await getAvailableDrivers(driveResult);
-    
-    
-    return {
-      origin: routeData.start_location,
-      destination: routeData.end_location,
-      distance: driveResult,
-      duration: routeData.duration,
-      options: drivers,
-      routeResponse: route.routeResponse,
-    };
+    try {
+      // Calcular rota usando o Google Maps API
+      const route = await fetchGoogleRoute(origin, destination);
+      const routeData = await calculateRoute(origin, destination);
+      const driveResult = parseFloat(routeData.distance.replace(' km',''));
+      // Calcular motoristas disponíveis
+      const drivers = await getAvailableDrivers(driveResult);
+
+      return {
+        origin: routeData.start_location,
+        destination: routeData.end_location,
+        distance: driveResult,
+        duration: routeData.duration,
+        options: drivers,
+        routeResponse: route.routeResponse,
+      };
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Unexpected error calculating route';
+      return reply
+        .code(502)
+        .send({ error_code: 'ROUTE_UNAVAILABLE', error_description: message });
+    }
     
 
   }

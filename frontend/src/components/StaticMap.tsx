@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface StaticMapProps {
   origin: { lat: number; lng: number }; // Coordenadas de origem
   destination: { lat: number; lng: number }; // Coordenadas de destino
 }
 
-const StaticMap: React.FC<StaticMapProps> = ({ origin, destination }) => {
+const StaticMap = ({ origin, destination }: StaticMapProps) => {
   const [mapUrl, setMapUrl] = useState('');
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string;
 
@@ -29,4 +29,3 @@ const StaticMap: React.FC<StaticMapProps> = ({ origin, destination }) => {
 };
 
 export default StaticMap;
-
