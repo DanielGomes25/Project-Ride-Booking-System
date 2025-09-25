@@ -44,6 +44,7 @@
     "@fastify/cors": "^10.0.1",
     "@prisma/client": "^5.22.0",
     "axios": "^1.7.7",
+    "dotenv": "^16.4.5",
     "eslint-config-trybe-backend": "^2.1.0",
     "fastify": "^5.1.0",
     "psql": "^0.0.1",
