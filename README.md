@@ -144,4 +144,7 @@ Exemplos cURL
 
 🖥️ Demonstração
 
-<img src='/Drive.gif'><img>
+<p align="center">
+  <img src="frontend/public/Desafio.gif" alt="Demonstração do app" />
+  
+</p>
