@@ -43,6 +43,7 @@ Pré‑requisitos
 - Rode a API:
   - `npm run dev` (http://localhost:8080)
   - Dica: para demo sem banco, defina `USE_MOCK_DRIVERS=true` no `.env` e você pode pular migrate/seed.
+  - Para demo 100% sem dependências: também defina `USE_MOCK_DB=true` (salva/lista corridas em memória)
 
 2) Frontend
 - Configure as variáveis do Vite:
@@ -77,6 +78,7 @@ Modo mock (sem dependências externas)
 - No `backend/.env` deixe:
   - `USE_MOCK_ROUTES=true` (não chama Google)
   - `USE_MOCK_DRIVERS=true` (não usa Postgres para listar motoristas)
+  - `USE_MOCK_DB=true` (confirmação e histórico em memória)
 - Observação: confirmar corrida e histórico ainda exigem banco. Posso mockar isso também, se quiser.
 
 Observações importantes

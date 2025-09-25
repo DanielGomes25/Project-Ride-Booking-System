@@ -16,6 +16,8 @@ services:
       USE_MOCK_ROUTES: ${USE_MOCK_ROUTES:-true}
       # Habilita mock de motoristas (sem Postgres)
       USE_MOCK_DRIVERS: ${USE_MOCK_DRIVERS:-true}
+      # Persiste corridas em memória (sem Postgres) para confirm/history
+      USE_MOCK_DB: ${USE_MOCK_DB:-true}
     depends_on:
       - db
     networks:

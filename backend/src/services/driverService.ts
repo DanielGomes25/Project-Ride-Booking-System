@@ -4,7 +4,7 @@ import { fetchGoogleRoute } from "./mapsService";
 const prisma = new PrismaClient();
 const useMockDrivers = process.env.USE_MOCK_DRIVERS === "true";
 
-const mockDrivers = [
+export const mockDrivers = [
   {
     id: 1,
     name: "Homer Simpson",
