@@ -85,6 +85,63 @@ Observações importantes
 - Se a API do Google retornar zero resultados ou a chave estiver inválida, a API responde 502 com `ROUTE_UNAVAILABLE`.
 - Para portfólio público, nunca commite chaves reais. Use os arquivos `.env.example`.
 
+**Variáveis De Ambiente**
+- Backend (`backend/.env`):
+  - `USE_MOCK_ROUTES` — quando `true`, não chama Google Directions e gera rotas simuladas.
+  - `USE_MOCK_DRIVERS` — quando `true`, lista motoristas de um conjunto mock (sem banco).
+  - `USE_MOCK_DB` — quando `true`, confirmações e histórico são salvos em memória.
+  - `DATABASE_URL` — URL do Postgres (obrigatória quando `USE_MOCK_DB=false`).
+  - `GOOGLE_API_KEY` — chave para Google Directions (obrigatória quando `USE_MOCK_ROUTES=false`).
+- Frontend (`frontend/.env`):
+  - `VITE_API_BASE_URL` — URL do backend (ex.: `http://localhost:8080`).
+  - `VITE_GOOGLE_MAPS_API_KEY` — chave para Google Static Maps (opcional; sem ela, o mapa não é exibido, mas o app funciona).
+
+**Fluxo De Teste Pela UI**
+- Acesse `http://localhost:5173`.
+- Preencha `ID do Cliente`, `Origem`, `Destino` e clique em `Calcular Estimativa`.
+- Escolha um motorista, confirme, e depois consulte o histórico.
+
+**Referência De API**
+- `POST /ride/estimate`
+  - Body: `{ "customer_id": string, "origin": string, "destination": string }`
+  - Sucesso: `{ origin, destination, distance: number, duration: string, options: Driver[], routeResponse }`
+  - Erros: `400 INVALID_DATA`, `502 ROUTE_UNAVAILABLE`.
+- `PATCH /ride/confirm`
+  - Body: `{ "customer_id": string, "origin": string, "destination": string, "distance": number, "duration": string, "driver": { id: number, name: string }, "value": number }`
+  - Sucesso: `{ success: true }`
+  - Erros: `400 INVALID_DATA`, `404 DRIVER_NOT_FOUND`, `406 INVALID_DISTANCE`.
+- `GET /ride/:customer_id?driver_id=...`
+  - Sucesso: `{ customer_id, rides: Ride[] }`
+  - Erros: `400 INVALID_DRIVER`, `404 NO_RIDES_FOUND`.
+
+Exemplos cURL
+- Estimar:
+  - `curl -X POST http://localhost:8080/ride/estimate -H 'Content-Type: application/json' -d '{"customer_id":"demo","origin":"Mogi","destination":"São Paulo"}'`
+- Confirmar:
+  - `curl -X PATCH http://localhost:8080/ride/confirm -H 'Content-Type: application/json' -d '{"customer_id":"demo","origin":"Mogi","destination":"São Paulo","distance":12.3,"duration":"25 mins","driver":{"id":1,"name":"Homer Simpson"},"value":30.75}'`
+- Histórico:
+  - `curl http://localhost:8080/ride/demo`
+
+**Estrutura Do Projeto**
+- Backend
+  - Fastify + TypeScript: `backend/src/server.ts`
+  - Rotas: `backend/src/routes/routes.ts`
+  - Controladores: `backend/src/controllers/*`
+  - Serviços: `backend/src/services/*`
+  - Mock store (memória): `backend/src/mocks/memoryStore.ts`
+  - Prisma schema: `backend/prisma/schema.prisma`
+- Frontend
+  - React + Vite: `frontend/`
+  - Rotas de UI: `frontend/src/routes/AppRoutes.tsx`
+  - Páginas: `frontend/src/pages/*`
+  - Mapa estático: `frontend/src/components/StaticMap.tsx`
+
+**Solução De Problemas**
+- 502 `ROUTE_UNAVAILABLE`: ative `USE_MOCK_ROUTES=true` ou configure `GOOGLE_API_KEY` e habilite Directions API.
+- `ECONNREFUSED` no frontend: verifique se o backend está ouvindo em `http://localhost:8080`. Ajuste `VITE_API_BASE_URL` no `frontend/.env`.
+- Erros de banco: ative `USE_MOCK_DB=true` para demo, ou configure `DATABASE_URL` e rode `npx prisma migrate dev && npm run seed`.
+- Mapa não aparece: defina `VITE_GOOGLE_MAPS_API_KEY` no `frontend/.env`.
+
 🖥️ Demonstração
 
 <img src='/Drive.gif'><img>
